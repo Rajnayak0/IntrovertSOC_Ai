@@ -1,6 +1,6 @@
-# IntrovertSOC — Architecture
+# IntrovertSOC_Ai — Architecture
 
-IntrovertSOC is an offline-capable, privacy-first reimagining of
+IntrovertSOC_Ai is an offline-capable, privacy-first reimagining of
 [FunnyWolf/agentic-soc-platform](https://github.com/FunnyWolf/agentic-soc-platform) (MIT).
 It keeps the intent of the original — agents that triage alerts, investigate cases, enrich
 IOCs, and write reports — but replaces every cloud LLM API-key integration with a single
@@ -34,7 +34,7 @@ Companion documents:
 ## 2. Repository layout
 
 ```
-IntrovertSOC/
+IntrovertSOC_Ai/
 ├── ARCHITECTURE.md            # this file
 ├── NETWORK.md                 # outbound connection policy + removals vs original
 ├── MIGRATION.md               # original LLM call sites → local_engine mapping

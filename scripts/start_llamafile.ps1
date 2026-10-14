@@ -1,4 +1,4 @@
-# Convenience wrapper to start a llamafile server for IntrovertSOC.
+# Convenience wrapper to start a llamafile server for IntrovertSOC_Ai.
 # The llamafile binary and GGUF model are NOT bundled (see NETWORK.md) - point
 # this script at your own copies.
 #

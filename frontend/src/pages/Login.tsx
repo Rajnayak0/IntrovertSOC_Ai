@@ -34,7 +34,7 @@ export function Login() {
             &gt;_
           </span>
           <div>
-            <div className="text-lg font-semibold tracking-tight">IntrovertSOC</div>
+            <div className="text-lg font-semibold tracking-tight">IntrovertSOC_Ai</div>
             <div className="text-xs text-muted">Offline security operations console</div>
           </div>
         </div>

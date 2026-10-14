@@ -1,10 +1,10 @@
 @echo off
 setlocal EnableExtensions
 cd /d "%~dp0"
-title IntrovertSOC setup
+title IntrovertSOC_Ai setup
 
 echo ============================================
-echo  IntrovertSOC - one-time setup
+echo  IntrovertSOC_Ai - one-time setup
 echo ============================================
 echo.
 

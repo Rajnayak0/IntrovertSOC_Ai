@@ -1,4 +1,4 @@
-"""OpenAI-compatible test double for IntrovertSOC.
+"""OpenAI-compatible test double for IntrovertSOC_Ai.
 
 Used by automated tests and for UI development when no llamafile is running.
 Stdlib only - no third-party dependencies.

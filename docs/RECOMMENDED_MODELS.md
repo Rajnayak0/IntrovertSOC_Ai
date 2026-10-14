@@ -1,6 +1,6 @@
-# RECOMMENDED_MODELS.md — Local GGUF models for IntrovertSOC
+# RECOMMENDED_MODELS.md — Local GGUF models for IntrovertSOC_Ai
 
-IntrovertSOC runs any OpenAI-compatible llamafile/llama-server endpoint. The model you pick is
+IntrovertSOC_Ai runs any OpenAI-compatible llamafile/llama-server endpoint. The model you pick is
 **your** choice — no downloads happen automatically, nothing is fetched at runtime. This page is
 the curated shortlist: ten well-known open-weight models with official or community GGUF
 quantizations, sorted **heaviest → lightest**. Set the file you choose under
@@ -40,7 +40,7 @@ runtime. Sources: official Qwen GGUF repos, ModelFit quant tables, model cards (
 
 | Your machine | Pick | Why |
 |---|---|---|
-| Any (verified) | **Qwen3-4B Q4_K_M** | The model IntrovertSOC was built and live-tested against — fits everywhere |
+| Any (verified) | **Qwen3-4B Q4_K_M** | The model IntrovertSOC_Ai was built and live-tested against — fits everywhere |
 | 8 GB RAM | Qwen3-8B Q4_K_M | Noticeably sharper triage/summaries; still cheap |
 | 16 GB RAM | Qwen3-14B Q4_K_M | Good structured-output reliability for JSON steps |
 | 24 GB RAM | Qwen3-32B Q4_K_M or Qwen3.8-27B | Best reasoning per GB on consumer hardware |
@@ -66,5 +66,5 @@ Notes for this project specifically:
 3. Copy the generated launch command (Windows/macOS/Linux tabs) and run it in a terminal
 4. Keep the llamafile terminal open; the status dot turns green when it answers
 
-No API key, no account, no download happens inside IntrovertSOC itself — you bring the file,
+No API key, no account, no download happens inside IntrovertSOC_Ai itself — you bring the file,
 the app only talks to `127.0.0.1`.

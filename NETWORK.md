@@ -1,12 +1,12 @@
-# IntrovertSOC — Network Policy
+# IntrovertSOC_Ai — Network Policy
 
-This document is the **complete** list of network connections IntrovertSOC is allowed to make.
+This document is the **complete** list of network connections IntrovertSOC_Ai is allowed to make.
 Anything not listed here is a bug. It also records what was removed relative to the original
 FunnyWolf/agentic-soc-platform project.
 
 Auditing method: connection-relevant code paths were reviewed from the original repository
 source; exact file references for the REMOVED section are backfilled from a full source grep
-(the same grep feeds `MIGRATION.md`). The allowlist below governs IntrovertSOC by
+(the same grep feeds `MIGRATION.md`). The allowlist below governs IntrovertSOC_Ai by
 construction: dependencies are allowlisted, and `backend/llm/local_engine.py` is the only
 module that may open an LLM connection.
 
@@ -20,14 +20,14 @@ module that may open an LLM connection.
 | 2 | **User-configured SIEM / log sources** — e.g. `https://splunk.internal:8089`, `https://es.corp.local:9200` | HTTPS/HTTP, whatever the user's source uses | Pull alerts by query (Splunk / Elasticsearch / OpenSearch adapters) | Source poller (`manage.py run_source_pollers`) — only sources the user created and enabled | Per-source config in the UI; disabled sources are never contacted |
 | 3 | **User-configured enrichment endpoints** (optional, off by default) | HTTPS/HTTP | User's *own* threat-intel server (e.g. self-hosted MISP/OpenCTI) or internal reputation service | IOC enrichment, only for providers the user added | Per-provider config; **default install ships local-file feeds only** |
 | 4 | **User-configured playbook HTTP actions** (optional) | HTTPS/HTTP | Destinations the user wrote into their own playbook YAML (`http_request` steps) | Playbook run, at the exact URL the user authored | Editable playbook definitions |
-| 5 | *(Inbound, not outbound)* Webhook ingestion `POST /api/webhook/<token>/` | HTTP | SIEM/vendor pushes alerts to IntrovertSOC | When the user's system sends data | Per-source random token; endpoint disabled if source disabled |
+| 5 | *(Inbound, not outbound)* Webhook ingestion `POST /api/webhook/<token>/` | HTTP | SIEM/vendor pushes alerts to IntrovertSOC_Ai | When the user's system sends data | Per-source random token; endpoint disabled if source disabled |
 
 **Loopback rule:** destination #1 defaults to and is documented as `127.0.0.1`. The only
 reason host/port are configurable is Docker (`host.docker.internal`) and advanced users who
 run llamafile on another machine **they own** — the app makes no connection to any
 third-party host under default settings.
 
-**Rows 2, 4 and 5 are policy placeholders for features not implemented:** IntrovertSOC
+**Rows 2, 4 and 5 are policy placeholders for features not implemented:** IntrovertSOC_Ai
 ships no source pollers, no `http_request` playbook step (the runner's whitelist is
 `log | llm | investigate | extract_knowledge | enrich`), and no token webhook endpoint.
 Alert ingestion is push-only via the authenticated `POST /api/alerts/` (single/batch).
@@ -53,7 +53,7 @@ wildcards, no cross-origin requests). Fonts and icons are bundled — no font/CD
 
 ### 2.1 Cloud LLM integration (the core removal)
 
-| Original | What it did | IntrovertSOC |
+| Original | What it did | IntrovertSOC_Ai |
 |---|---|---|
 | `backend/integrations/llm/llmapi.py` (`LLMAPI.get_model()` → `langchain_openai.ChatOpenAI`) | Instantiated an OpenAI-compatible client with user-supplied `base_url`, **`api_key`**, temperature, and optional HTTP **proxy** (`httpx.Client(proxy=...)`) — the gateway for every AI feature | Replaced by `backend/llm/local_engine.py`: plain `httpx` → `127.0.0.1`, internal dummy key `local` injected only if demanded, **no proxy option**, no provider list, no tags |
 | `langchain-openai` dependency (`backend/pyproject.toml`) | Pulls the `openai` cloud SDK into the backend | **Removed entirely** (also removes `langchain-core`'s OpenAI path). No `openai`/`anthropic`/`langchain-openai` anywhere in the tree |
@@ -62,7 +62,7 @@ wildcards, no cross-origin requests). Fonts and icons are bundled — no font/CD
 
 ### 2.2 Other cloud/remote services in the original dependency set
 
-| Original dependency / feature | Remote target | IntrovertSOC |
+| Original dependency / feature | Remote target | IntrovertSOC_Ai |
 |---|---|---|
 | `django-storages[boto3]` | AWS S3 (object storage) | **Removed** — no cloud storage; files (if any) stay on local disk |
 | `pycti` (OpenCTI client) | OpenCTI server (remote threat-intel platform) | **Removed** as a default dependency; enrichment defaults to local CSV/JSON feeds shipped in `data/threat_feeds/`. Users may still add their *own* MISP/OpenCTI URL as an opt-in provider |
@@ -71,7 +71,7 @@ wildcards, no cross-origin requests). Fonts and icons are bundled — no font/CD
 | `psycopg2` (PostgreSQL) | — | **Removed** — SQLite |
 | PyPI index pinned to `https://mirrors.aliyun.com/pypi/simple` in `backend/pyproject.toml` | Build-time package mirror | **Removed** — default PyPI at build time; **no** package index is contacted at runtime |
 | Git submodules `asp-doc` (VitePress site on Cloudflare Pages) and `asp-marketplace` | External doc/plugin repos | **Not carried over** — no submodules, no doc-site tooling, no plugin marketplace in the fork |
-| `frontend/public/fonts/JetBrainsMono/*` + `lucide-react`, `@ant-design/*` etc. | (fonts are bundled locally in original — no CDN found) | Original fonts are bundled, not CDN — nothing to remove there. IntrovertSOC uses a system font stack + inlined SVG icons instead, shrinking the dependency surface further |
+| `frontend/public/fonts/JetBrainsMono/*` + `lucide-react`, `@ant-design/*` etc. | (fonts are bundled locally in original — no CDN found) | Original fonts are bundled, not CDN — nothing to remove there. IntrovertSOC_Ai uses a system font stack + inlined SVG icons instead, shrinking the dependency surface further |
 | Links to `https://asp.viperrtp.com` in original README | Documentation website (click-through links only, not runtime calls) | **Not carried over** — our README links only to the original's GitHub repository for attribution |
 
 ### 2.3 Things checked and found NOT present in the original
@@ -79,7 +79,7 @@ wildcards, no cross-origin requests). Fonts and icons are bundled — no font/CD
 To be accurate rather than alarmist: the original contains **no telemetry, no analytics, no
 update-check, and no license-check code** (frontend `index.html` is clean; no
 Sentry/segment/posthog-style dependencies in `frontend/package.json`). Nothing needed
-removal there. IntrovertSOC's guarantee is stronger than "we didn't find any": the policy in
+removal there. IntrovertSOC_Ai's guarantee is stronger than "we didn't find any": the policy in
 §1 means only allowlisted destinations can ever be contacted, and the dependency list is
 closed.
 

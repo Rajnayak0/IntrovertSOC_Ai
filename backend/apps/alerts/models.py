@@ -37,7 +37,7 @@ class Alert(models.Model):
     """One alert from any source (manual entry, webhook batch, SIEM export).
 
     Leaner than the original (no disposition/analytic/policy product taxonomy):
-    the fields IntrovertSOC actually consumes. Unmapped extras stay in raw_data.
+    the fields IntrovertSOC_Ai actually consumes. Unmapped extras stay in raw_data.
     """
 
     alert_id = models.CharField(max_length=32, unique=True, editable=False, db_index=True, blank=True, default="")

@@ -1,4 +1,4 @@
-"""IntrovertSOC LLM package - the only place in the codebase allowed to reach a model."""
+"""IntrovertSOC_Ai LLM package - the only place in the codebase allowed to reach a model."""
 
 from .local_engine import (  # noqa: F401
     LLMError,

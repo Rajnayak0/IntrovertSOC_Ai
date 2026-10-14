@@ -5,7 +5,7 @@ class ModelConfig(models.Model):
     """DB override for the local LLM endpoint, edited from the Model Settings page.
 
     Blank fields fall back to .env (LLAMAFILE_*). There is deliberately NO api_key
-    field - IntrovertSOC never stores or displays credentials for the model server.
+    field - IntrovertSOC_Ai never stores or displays credentials for the model server.
     """
 
     base_url = models.URLField(max_length=300, blank=True, default="")

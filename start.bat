@@ -1,7 +1,7 @@
 @echo off
 setlocal EnableExtensions
 cd /d "%~dp0"
-title IntrovertSOC launcher
+title IntrovertSOC_Ai launcher
 
 rem =====================================================================
 rem Config - only needed if auto-detect gets it wrong. local-paths.bat
@@ -68,17 +68,17 @@ where node >nul 2>&1 || goto no_node
 
 rem --- Launch three windows: backend, frontend, local model ---
 echo Starting backend  (window 1, port 8000)...
-start "IntrovertSOC backend"  /d "%~dp0backend"  cmd /k "uv run python manage.py runserver 127.0.0.1:8000"
+start "IntrovertSOC_Ai backend"  /d "%~dp0backend"  cmd /k "uv run python manage.py runserver 127.0.0.1:8000"
 
 echo Starting frontend (window 2, port 5173)...
-start "IntrovertSOC frontend" /d "%~dp0frontend" cmd /k "npm run dev"
+start "IntrovertSOC_Ai frontend" /d "%~dp0frontend" cmd /k "npm run dev"
 
 echo Starting local LLM (window 3, port 8080)...
 netstat -ano | findstr /c:":8080 " | findstr LISTENING >nul 2>&1
 if not errorlevel 1 (
     echo   port 8080 already has a model server - skipping llamafile
 ) else (
-    start "IntrovertSOC LLM" cmd /k ""%LLAMAFILE_EXE%" -m "%GGUF_MODEL%" --server --host 127.0.0.1 --port 8080"
+    start "IntrovertSOC_Ai LLM" cmd /k ""%LLAMAFILE_EXE%" -m "%GGUF_MODEL%" --server --host 127.0.0.1 --port 8080"
 )
 
 echo.
@@ -87,7 +87,7 @@ timeout /t 6 /nobreak >nul
 start "" http://127.0.0.1:5173
 
 echo.
-echo IntrovertSOC is starting. Three windows are open:
+echo IntrovertSOC_Ai is starting. Three windows are open:
 echo    1 backend   2 frontend   3 local model
 echo Keep them open while you use it. Close them (or run stop.bat) to stop.
 echo First login: the account you created in setup.bat.
@@ -95,7 +95,7 @@ pause
 exit /b 0
 
 :check
-echo ==== IntrovertSOC launch check ====
+echo ==== IntrovertSOC_Ai launch check ====
 if defined LLAMAFILE_EXE (echo llamafile : %LLAMAFILE_EXE%) else (echo llamafile : NOT FOUND)
 if defined GGUF_MODEL    (echo model     : %GGUF_MODEL%)     else (echo model     : NOT FOUND)
 where uv >nul 2>&1  && (echo uv        : OK) || (echo uv        : MISSING - run setup.bat)
@@ -106,7 +106,7 @@ exit /b 0
 
 :already_running
 echo.
-echo IntrovertSOC is already running (port 8000 or 5173 is busy).
+echo IntrovertSOC_Ai is already running (port 8000 or 5173 is busy).
 echo Starting a second copy breaks logins and mode switching.
 echo Use it as-is, or run stop.bat first and then start.bat again.
 pause

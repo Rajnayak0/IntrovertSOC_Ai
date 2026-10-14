@@ -1,4 +1,4 @@
-"""THE single point of LLM integration for IntrovertSOC.
+"""THE single point of LLM integration for IntrovertSOC_Ai.
 
 Everything that needs a model - agent nodes, chat, playbooks, knowledge extraction -
 imports from this module. Nothing else in the codebase may open a connection to an LLM.

@@ -19,7 +19,7 @@ export function useModelStatus(pollMs: number = POLL_MS) {
         model: '',
         detail: 'Backend unreachable',
         checked_at: Date.now() / 1000,
-        banner: 'Backend unreachable — is the IntrovertSOC server running?',
+        banner: 'Backend unreachable — is the IntrovertSOC_Ai server running?',
       });
     } finally {
       setLoading(false);

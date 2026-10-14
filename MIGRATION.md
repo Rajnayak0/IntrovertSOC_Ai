@@ -1,16 +1,16 @@
-# MIGRATION.md — Original LLM call sites → IntrovertSOC `local_engine`
+# MIGRATION.md — Original LLM call sites → IntrovertSOC_Ai `local_engine`
 
 Source audited: `FunnyWolf/agentic-soc-platform` @ `master` (zip downloaded and grepped for
 `LLMAPI`, `ChatOpenAI`, `with_structured_output`, `langchain_openai`, `langchain_core`,
 `.invoke(`, and hardcoded `https://` endpoints). This file tracks every original LLM/external-AI
-touchpoint and its status in IntrovertSOC.
+touchpoint and its status in IntrovertSOC_Ai.
 
 Legend: **REMOVED** = feature/config deleted · **REWIRED** = intent kept, now routed exclusively
-through `backend/llm/local_engine.py` · **REPLACED** = superseded by a new IntrovertSOC module.
+through `backend/llm/local_engine.py` · **REPLACED** = superseded by a new IntrovertSOC_Ai module.
 
 ## A. Backend LLM call sites (all of them)
 
-| # | Original location | What it did | Status | IntrovertSOC destination |
+| # | Original location | What it did | Status | IntrovertSOC_Ai destination |
 |---|---|---|---|---|
 | 1 | `backend/integrations/llm/llmapi.py:22-53` — `LLMAPI.get_model()` → `langchain_openai.ChatOpenAI(model, base_url, api_key, proxy, http_client)` | The single gateway: provider list from DB (`LLMProviderConfig`: `base_url`, `api_key`, `proxy`, `tags`, `priority`), tag-based selection, temperature | **REWIRED + REMOVED** | `backend/llm/local_engine.py` — plain `httpx` → `http://127.0.0.1:<port>/v1/chat/completions`; internal dummy key `local` injected only if demanded; **no proxy, no provider list, no tags, no api_key storage** |
 | 2 | `backend/apps/agentic/analysis/prompts.py:54-60` — `invoke_structured_llm()` = `LLMAPI().get_model(tag="structured_output").with_structured_output(schema).invoke([System,Human])` | Funnel for every structured AI output; prompts read from `data/playbooks/*/*_{en,zh}.md` | **REWIRED** | `local_engine.complete_json(messages, schema=PydanticModel)` — prompt-enforced JSON (local models are unreliable at native tool-calling), pydantic validation, one repair retry, then deterministic fallback |
@@ -32,7 +32,7 @@ backend — items 1–9 are the complete inventory.
 | 10 | `frontend/src/pages/LLMProviderSettings.tsx` (fields `base_url`, `api_key`, provider name, test button) | Full cloud-provider editor incl. **API Key input** | **REMOVED** → replaced by **Model Settings** page: endpoint host/port, model label, GGUF path, health status, generated llamafile launch command — **no key field** |
 | 11 | `frontend/src/config/resources.tsx:1031-1051` (`llm-providers` resource: `endpoint: '/settings/llm-providers/'`, `base_url` field) | Generic CRUD wiring for provider configs | **REMOVED** → `api/model/config` endpoints (admin-only) |
 | 12 | `frontend/src/pages/AuditLogsSettings.tsx:51` (`'LLM Provider'` audit target) | Audit-log link target for provider changes | **REMOVED** → audit targets now include `model_config` |
-| 13 | `frontend/src/components/PersonalCenterModal.tsx` (app **API Key** create/list/revoke for `agent_api`) | Local bearer tokens for the CLI/harness agent API | **REMOVED** (`agent_api` out of scope for IntrovertSOC) |
+| 13 | `frontend/src/components/PersonalCenterModal.tsx` (app **API Key** create/list/revoke for `agent_api`) | Local bearer tokens for the CLI/harness agent API | **REMOVED** (`agent_api` out of scope for IntrovertSOC_Ai) |
 
 ## C. External cloud services referenced by original defaults (REMOVED)
 

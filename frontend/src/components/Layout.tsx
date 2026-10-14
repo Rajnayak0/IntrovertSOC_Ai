@@ -77,7 +77,7 @@ export function Layout() {
             &gt;_
           </span>
           <div className="leading-tight">
-            <div className="text-sm font-semibold tracking-tight">IntrovertSOC</div>
+            <div className="text-sm font-semibold tracking-tight">IntrovertSOC_Ai</div>
             <div className="text-[10px] uppercase tracking-widest text-faint">offline · local</div>
           </div>
         </div>

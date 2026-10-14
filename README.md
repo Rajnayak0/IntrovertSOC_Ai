@@ -1,7 +1,7 @@
-# 🛡️ IntrovertSOC
+# 🛡️ IntrovertSOC_Ai
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Rajnayak0/IntrovertSOC/main/frontend/public/favicon.svg" width="96" height="96" alt="IntrovertSOC Logo" />
+  <img src="https://raw.githubusercontent.com/Rajnayak0/IntrovertSOC_Ai/main/frontend/public/favicon.svg" width="96" height="96" alt="IntrovertSOC_Ai Logo" />
 </p>
 
 <p align="center">
@@ -24,8 +24,8 @@
 
 ```powershell
 # 1. Clone the repository
-git clone https://github.com/Rajnayak0/IntrovertSOC.git
-cd IntrovertSOC
+git clone https://github.com/Rajnayak0/IntrovertSOC_Ai.git
+cd IntrovertSOC_Ai
 
 # 2. Download llamafile.exe & your GGUF model into the models/ folder
 # 3. Double-click setup.bat   (Installs dependencies & creates admin)
@@ -56,8 +56,8 @@ Mainstream AI security tools send raw security logs, active intrusion alerts, fi
 
 For security operations centers, defense contractors, financial institutions, and privacy-conscious organizations, this creates immediate regulatory violations (**GDPR, HIPAA, SOC 2, ISO 27001, Defense/Gov standards**) and risks catastrophic corporate espionage through third-party data breaches.
 
-### 🛡️ The Solution: IntrovertSOC
-**IntrovertSOC** is an air-gapped, sovereign AI Security Operations Center engineered from the ground up to keep **all security intelligence strictly within your perimeter**:
+### 🛡️ The Solution: IntrovertSOC_Ai
+**IntrovertSOC_Ai** is an air-gapped, sovereign AI Security Operations Center engineered from the ground up to keep **all security intelligence strictly within your perimeter**:
 - **Zero Cloud Egress:** Operates exclusively over `127.0.0.1`. The application makes **zero outbound requests** to cloud LLM providers, collects no telemetry, and requires no API keys.
 - **Lightweight & Self-Contained:** Stripped of complex distributed infrastructure. No PostgreSQL, Redis, Kafka, or LDAP clusters are required. Runs efficiently on **SQLite** and background worker threads.
 - **Local GGUF Acceleration:** Powered by Mozilla's high-performance `llamafile` / llama.cpp runtime, utilizing your GPU (NVIDIA CUDA, AMD ROCm, Apple Metal) or CPU without friction.
@@ -98,7 +98,7 @@ flowchart LR
 
 ## 📸 Interface Preview & Screenshots
 
-Explore IntrovertSOC running locally in full dark mode:
+Explore IntrovertSOC_Ai running locally in full dark mode:
 
 ### 1. Unified SOC Analyst Dashboard
 ![Unified SOC Analyst Dashboard](docs/screenshots/dashboard.png)
@@ -120,10 +120,10 @@ Explore IntrovertSOC running locally in full dark mode:
 
 ## 📁 Folder Structure (Where Files Go)
 
-When setting up IntrovertSOC, place your model and engine files as shown below:
+When setting up IntrovertSOC_Ai, place your model and engine files as shown below:
 
 ```text
-IntrovertSOC/
+IntrovertSOC_Ai/
 │
 ├── models/
 │   ├── llamafile.exe               <-- Place downloaded llamafile binary here
@@ -143,7 +143,7 @@ IntrovertSOC/
 
 ## ✨ Key Features & Chat Modes
 
-IntrovertSOC features three switchable **LLM Persona Modes** right from the top navigation bar. Every triage report, IOC analysis, and chat interaction adapts instantly:
+IntrovertSOC_Ai features three switchable **LLM Persona Modes** right from the top navigation bar. Every triage report, IOC analysis, and chat interaction adapts instantly:
 
 | Mode | Personality | Best For |
 |---|---|---|
@@ -155,7 +155,7 @@ IntrovertSOC features three switchable **LLM Persona Modes** right from the top 
 
 ## 🧠 Best Models & Hardware Requirements
 
-IntrovertSOC runs any GGUF-quantized model via `llamafile` (or any OpenAI-compatible server on port 8080).
+IntrovertSOC_Ai runs any GGUF-quantized model via `llamafile` (or any OpenAI-compatible server on port 8080).
 
 ### What is Quantization (`Q4_K_M`)?
 Quantization reduces large model weights from 16-bit precision to 4-bit integers.  
@@ -200,7 +200,7 @@ Before running the application on Windows, ensure the following prerequisites ar
 
 ## 🖱️ One-Click Batch Files (.bat)
 
-IntrovertSOC comes with pre-configured batch scripts in the project root. **You do not need to create these manually** — they are already included in your clone!
+IntrovertSOC_Ai comes with pre-configured batch scripts in the project root. **You do not need to create these manually** — they are already included in your clone!
 
 ### 1. `setup.bat` (Run Once)
 Checks prerequisites, installs backend Python dependencies via `uv`, creates database tables, lets you create an admin account, and installs frontend packages.
@@ -211,10 +211,10 @@ Checks prerequisites, installs backend Python dependencies via `uv`, creates dat
 @echo off
 setlocal EnableExtensions
 cd /d "%~dp0"
-title IntrovertSOC setup
+title IntrovertSOC_Ai setup
 
 echo ============================================
-echo  IntrovertSOC - one-time setup
+echo  IntrovertSOC_Ai - one-time setup
 echo ============================================
 echo.
 
@@ -292,7 +292,7 @@ Auto-detects `llamafile.exe` and your `.gguf` file in `models\`, starts backend 
 @echo off
 setlocal EnableExtensions
 cd /d "%~dp0"
-title IntrovertSOC launcher
+title IntrovertSOC_Ai launcher
 
 rem =====================================================================
 rem Config - only needed if auto-detect gets it wrong. local-paths.bat
@@ -356,17 +356,17 @@ where node >nul 2>&1 || goto no_node
 
 rem --- Launch three windows: backend, frontend, local model ---
 echo Starting backend  (window 1, port 8000)...
-start "IntrovertSOC backend"  /d "%~dp0backend"  cmd /k "uv run python manage.py runserver 127.0.0.1:8000"
+start "IntrovertSOC_Ai backend"  /d "%~dp0backend"  cmd /k "uv run python manage.py runserver 127.0.0.1:8000"
 
 echo Starting frontend (window 2, port 5173)...
-start "IntrovertSOC frontend" /d "%~dp0frontend" cmd /k "npm run dev"
+start "IntrovertSOC_Ai frontend" /d "%~dp0frontend" cmd /k "npm run dev"
 
 echo Starting local LLM (window 3, port 8080)...
 netstat -ano | findstr /c:":8080 " | findstr LISTENING >nul 2>&1
 if not errorlevel 1 (
     echo   port 8080 already has a model server - skipping llamafile
 ) else (
-    start "IntrovertSOC LLM" cmd /k ""%LLAMAFILE_EXE%" -m "%GGUF_MODEL%" --server --host 127.0.0.1 --port 8080"
+    start "IntrovertSOC_Ai LLM" cmd /k ""%LLAMAFILE_EXE%" -m "%GGUF_MODEL%" --server --host 127.0.0.1 --port 8080"
 )
 
 echo.
@@ -375,7 +375,7 @@ timeout /t 6 /nobreak >nul
 start "" http://127.0.0.1:5173
 
 echo.
-echo IntrovertSOC is starting. Three windows are open:
+echo IntrovertSOC_Ai is starting. Three windows are open:
 echo    1 backend   2 frontend   3 local model
 echo Keep them open while you use it. Close them (or run stop.bat) to stop.
 echo First login: the account you created in setup.bat.
@@ -383,7 +383,7 @@ pause
 exit /b 0
 
 :check
-echo ==== IntrovertSOC launch check ====
+echo ==== IntrovertSOC_Ai launch check ====
 if defined LLAMAFILE_EXE (echo llamafile : %LLAMAFILE_EXE%) else (echo llamafile : NOT FOUND)
 if defined GGUF_MODEL    (echo model     : %GGUF_MODEL%)     else (echo model     : NOT FOUND)
 where uv >nul 2>&1  && (echo uv        : OK) || (echo uv        : MISSING - run setup.bat)
@@ -394,7 +394,7 @@ exit /b 0
 
 :already_running
 echo.
-echo IntrovertSOC is already running (port 8000 or 5173 is busy).
+echo IntrovertSOC_Ai is already running (port 8000 or 5173 is busy).
 echo Starting a second copy breaks logins and mode switching.
 echo Use it as-is, or run stop.bat first and then start.bat again.
 pause
@@ -429,7 +429,7 @@ Safely kills processes running on ports 8000, 5173, and 8080, and cleans up any 
 setlocal EnableExtensions
 cd /d "%~dp0"
 
-echo Stopping IntrovertSOC servers (ports 8000 backend, 5173 frontend, 8080 LLM)...
+echo Stopping IntrovertSOC_Ai servers (ports 8000 backend, 5173 frontend, 8080 LLM)...
 
 for %%P in (8000 5173 8080) do (
     for /f "tokens=5" %%I in ('netstat -ano ^| findstr /c:":%%P " ^| findstr LISTENING') do (
@@ -438,7 +438,7 @@ for %%P in (8000 5173 8080) do (
     )
 )
 
-powershell -NoProfile -Command "Get-CimInstance Win32_Process | Where-Object { ($_.CommandLine -match 'manage\.py runserver' -and $_.CommandLine -match 'IntrovertSOC') -or ($_.CommandLine -match 'vite\.js' -and $_.CommandLine -match 'IntrovertSOC') -or ($_.Name -eq 'uv.exe' -and $_.CommandLine -match 'manage\.py runserver') } | ForEach-Object { Write-Host ('  killing orphan ' + $_.ProcessId + ' [' + $_.Name + ']'); Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }"
+powershell -NoProfile -Command "Get-CimInstance Win32_Process | Where-Object { ($_.CommandLine -match 'manage\.py runserver' -and $_.CommandLine -match 'IntrovertSOC_Ai') -or ($_.CommandLine -match 'vite\.js' -and $_.CommandLine -match 'IntrovertSOC_Ai') -or ($_.Name -eq 'uv.exe' -and $_.CommandLine -match 'manage\.py runserver') } | ForEach-Object { Write-Host ('  killing orphan ' + $_.ProcessId + ' [' + $_.Name + ']'); Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }"
 
 echo Done.
 pause
@@ -476,10 +476,10 @@ set "GGUF_MODEL=C:\AI_Models\models\Qwen3-4B-Q4_K_M.gguf"
 | **Port already in use error** | An existing background server is occupying port 8000, 5173, or 8080. | Run `stop.bat` to terminate lingering processes, then run `start.bat` again. |
 | **CSRF verification failed** | Two backend processes are running simultaneously. | Run `stop.bat`, close browser tabs for `127.0.0.1`, and re-launch `start.bat`. |
 | **Status dot is Grey / Disconnected** | `llamafile` failed to load model into RAM or port 8080 is blocked. | Inspect Window 3 (LLM terminal) for error output. Ensure the model fits your available RAM. |
-| **Model outputting reasoning tags** | Model template leaking `<think>` tokens into content. | IntrovertSOC's `local_engine.py` automatically cleans reasoning tokens. Ensure you are using an Instruct GGUF model. |
+| **Model outputting reasoning tags** | Model template leaking `<think>` tokens into content. | IntrovertSOC_Ai's `local_engine.py` automatically cleans reasoning tokens. Ensure you are using an Instruct GGUF model. |
 
 ---
 
 ## 📜 Attribution & License
 
-IntrovertSOC is derived from [FunnyWolf/agentic-soc-platform](https://github.com/FunnyWolf/agentic-soc-platform) and licensed under the **MIT License**. See [LICENSE](LICENSE) for full details.
+IntrovertSOC_Ai is derived from [FunnyWolf/agentic-soc-platform](https://github.com/FunnyWolf/agentic-soc-platform) and licensed under the **MIT License**. See [LICENSE](LICENSE) for full details.

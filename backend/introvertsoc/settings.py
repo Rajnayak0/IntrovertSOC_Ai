@@ -1,4 +1,4 @@
-"""Django settings for IntrovertSOC.
+"""Django settings for IntrovertSOC_Ai.
 
 Offline-first rules enforced here:
   * no cloud LLM SDK exists in the dependency tree (see pyproject.toml)

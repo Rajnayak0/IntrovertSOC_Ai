@@ -47,7 +47,7 @@ def _launch_commands(cfg, gguf_path: str, port: int) -> dict:
         "posix": f"./llamafile -m {quoted} --server --host 127.0.0.1 --port {port}",
         "note": (
             "Run this in a terminal you keep open. Adjust the executable name to your "
-            "llamafile binary. IntrovertSOC does not start or bundle the model process - "
+            "llamafile binary. IntrovertSOC_Ai does not start or bundle the model process - "
             "it only connects to it."
         ),
     }
